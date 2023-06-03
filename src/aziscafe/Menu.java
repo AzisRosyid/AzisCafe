@@ -18,11 +18,7 @@ import javax.imageio.ImageIO;
 import javax.swing.DefaultComboBoxModel;
 import javax.swing.ImageIcon;
 import javax.swing.JFrame;
-import javax.swing.JLabel;
-import javax.swing.JTable;
 import javax.swing.table.DefaultTableModel;
-import javax.swing.table.TableCellRenderer;
-import javax.swing.table.TableColumnModel;
 
 /**
  *
@@ -48,10 +44,10 @@ public class Menu extends javax.swing.JFrame {
                 return false;
             }
         };
-        jTable1.setModel(tableModel);
+        menuTable.setModel(tableModel);
         
         dc = (DefaultComboBoxModel) menuOrder.getModel();
-        dt = (DefaultTableModel) jTable1.getModel();
+        dt = (DefaultTableModel) menuTable.getModel();
         setDefaultCloseOperation(JFrame.HIDE_ON_CLOSE);
         loadForm();
         setLocationRelativeTo(null);
@@ -69,12 +65,12 @@ public class Menu extends javax.swing.JFrame {
                 dc.addElement(st);
             dt.addColumn(st);
         }
-        jTable1.getColumn("Image").setMinWidth(0);
-        jTable1.getColumn("Image").setMaxWidth(0);
-        jTable1.getColumn("Image").setWidth(0);
-        jTable1.getColumn("Id").setMinWidth(0);
-        jTable1.getColumn("Id").setMaxWidth(0);
-        jTable1.getColumn("Id").setWidth(0);
+        menuTable.getColumn("Image").setMinWidth(0);
+        menuTable.getColumn("Image").setMaxWidth(0);
+        menuTable.getColumn("Image").setWidth(0);
+        menuTable.getColumn("Id").setMinWidth(0);
+        menuTable.getColumn("Id").setMaxWidth(0);
+        menuTable.getColumn("Id").setWidth(0);
         name = ""; image = ""; id = null; carbo = null; protein = null; price = null;
         
         loadData();
@@ -144,7 +140,7 @@ public class Menu extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        menuTable = new javax.swing.JTable();
         jLabel3 = new javax.swing.JLabel();
         jButton1 = new javax.swing.JButton();
         menuSearch = new javax.swing.JTextField();
@@ -210,7 +206,7 @@ public class Menu extends javax.swing.JFrame {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        menuTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -221,12 +217,12 @@ public class Menu extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        menuTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                menuTableMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(menuTable);
 
         jLabel3.setText("Order By :");
 
@@ -402,17 +398,17 @@ public class Menu extends javax.swing.JFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
+    private void menuTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_menuTableMouseClicked
         // TODO add your handling code here:
-        int row = jTable1.getSelectedRow();
-        id = Integer.valueOf(jTable1.getValueAt(row, 1).toString());
-        name = jTable1.getValueAt(row, 2).toString();
-        price = Double.valueOf(jTable1.getValueAt(row, 3).toString());
-        carbo = Integer.valueOf(jTable1.getValueAt(row, 4).toString());
-        protein = Integer.valueOf(jTable1.getValueAt(row, 5).toString());
-        image = jTable1.getValueAt(row, 6).toString();
+        int row = menuTable.getSelectedRow();
+        id = Integer.valueOf(menuTable.getValueAt(row, 1).toString());
+        name = menuTable.getValueAt(row, 2).toString();
+        price = Double.valueOf(menuTable.getValueAt(row, 3).toString());
+        carbo = Integer.valueOf(menuTable.getValueAt(row, 4).toString());
+        protein = Integer.valueOf(menuTable.getValueAt(row, 5).toString());
+        image = menuTable.getValueAt(row, 6).toString();
         loadDescription();
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_menuTableMouseClicked
 
     private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
         Method.cashier.setEnabled(true);
@@ -509,7 +505,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane2;
-    private javax.swing.JTable jTable1;
     private javax.swing.JTextField menuCarbo;
     private javax.swing.JLabel menuImage;
     private javax.swing.JTextField menuName;
@@ -518,5 +513,6 @@ public class Menu extends javax.swing.JFrame {
     private javax.swing.JTextField menuPrice;
     private javax.swing.JTextField menuProtein;
     private javax.swing.JTextField menuSearch;
+    private javax.swing.JTable menuTable;
     // End of variables declaration//GEN-END:variables
 }

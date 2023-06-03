@@ -61,27 +61,6 @@ public class OrderNote extends javax.swing.JFrame {
             Logger.getLogger(OrderNote.class.getName()).log(Level.SEVERE, null, ex);
         }
     }
-    
-//    private void loadForm2() {
-//        int spc = Method.spcKey + Method.spcValue;
-//        String start = ""; String end = "\n";
-//        headerNote = ""; bottomNote = "";
-//        headerNote += start + "=".repeat(spc) + end;
-//        headerNote += String.format("%s%" + (spc/2 + 4) + "s%" + (spc/2 - 3) + "s", start, "Azis Cafe", end);
-//        headerNote += start + "=".repeat(spc) + end;
-//        headerNote += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, "Date : ", Method.date, end);
-//        headerNote += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, "Cafe Boss : ", "Azis Rosyid", end);
-//        headerNote += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, "Cashier : ", Method.name, end);
-//        headerNote += start + "-".repeat(spc) + end;
-//        for (OrderMenu st: Method.orderMenus) {
-//            headerNote += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, st.getQty() + " " +st.getName(), Method.curr(st.getTotal()), end);
-//        }
-//        headerNote += start + "-".repeat(spc) + end;
-//        bottomNote += start + "=".repeat(spc) + end;
-//        bottomNote += String.format("%s%" + (spc/2 + 11) + "s%" + (spc/2 - 10) + "s", start, "Thank you for ordering!", end);
-//        bottomNote += start + "=".repeat(spc);
-//        orderNote.setText(headerNote + Method.cashierNote + bottomNote);
-//    }
 
     /**
      * This method is called from within the constructor to initialize the form.
@@ -306,7 +285,7 @@ public class OrderNote extends javax.swing.JFrame {
 
             System.out.println("PDF printed successfully!");
         } catch (Exception e) {
-         
+           
         }
     }//GEN-LAST:event_orderPrintActionPerformed
 

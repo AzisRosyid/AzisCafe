@@ -93,8 +93,7 @@ public class OrderHistory extends javax.swing.JFrame {
                 dc.addElement(st);
             dt.addColumn(st);
         }
-//        TableColumn informationColumn = historyTable.getColumn("Information");
-        TableColumn informationColumn = historyTable.getColumnModel().getColumn(4);
+        TableColumn informationColumn = historyTable.getColumn("Information");
         informationColumn.setCellRenderer(new AutoHeightCellRenderer());
         historyTable.getColumnModel().addColumnModelListener(columnModelListener);
 

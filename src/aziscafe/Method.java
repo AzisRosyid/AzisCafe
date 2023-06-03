@@ -61,9 +61,11 @@ public class Method {
         }
     }
     
-    public static boolean isLong(String number) {
+    public static boolean isNumber(String number) {
         try {
-            Long.valueOf(number);
+            for (char st: number.toCharArray()) {
+                Integer.valueOf(String.valueOf(st));
+            }
             return true;
         } catch (NumberFormatException e) {
             return false;

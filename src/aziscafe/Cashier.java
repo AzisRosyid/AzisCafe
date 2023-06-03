@@ -55,8 +55,8 @@ public class Cashier extends javax.swing.JFrame {
                 return false;
             }
         };
-        jTable1.setModel(tableModel);
-        dt = (DefaultTableModel) jTable1.getModel();
+        orderTable.setModel(tableModel);
+        dt = (DefaultTableModel) orderTable.getModel();
         cashierConsole.setAlignmentX(JTextPane.CENTER_ALIGNMENT);
         Method.cashier = this;
         loadForm();
@@ -73,12 +73,12 @@ public class Cashier extends javax.swing.JFrame {
         for (String st: colNames) {
             dt.addColumn(st);
         }
-        jTable1.getColumn("Image").setMinWidth(0);
-        jTable1.getColumn("Image").setMaxWidth(0);
-        jTable1.getColumn("Image").setWidth(0);
-        jTable1.getColumn("Id").setMinWidth(0);
-        jTable1.getColumn("Id").setMaxWidth(0);
-        jTable1.getColumn("Id").setWidth(0);
+        orderTable.getColumn("Image").setMinWidth(0);
+        orderTable.getColumn("Image").setMaxWidth(0);
+        orderTable.getColumn("Image").setWidth(0);
+        orderTable.getColumn("Id").setMinWidth(0);
+        orderTable.getColumn("Id").setMaxWidth(0);
+        orderTable.getColumn("Id").setWidth(0);
         cashierPlasticBag.setSelected(false); cashierDineIn.setSelected(true); cashierPaymentType.setSelectedIndex(0);
         cashierBankName.setSelectedIndex(0); cashierCardNumber.setText(""); cashierInformation.setText(""); cashierCoupon.setSelectedIndex(0);
         name = ""; image = ""; carbo = 0; protein = 0; subTotal = 0; grandTotal = 0;  method = ""; isPlasticBag = false; isCredit = false; 
@@ -225,7 +225,7 @@ public class Cashier extends javax.swing.JFrame {
             if (cashierBankName.getSelectedIndex() != 0) {
                 result += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, "Credit :", bankName, end);
                 if (!cashierCardNumber.getText().isEmpty()) {
-                    if (Method.isLong(cashierCardNumber.getText())) {
+                    if (Method.isNumber(cashierCardNumber.getText())) {
                         if (cashierCardNumber.getText().length() == 16) {
                             result += start + "-".repeat(spc) + end;
                             result += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, "Change :", Method.curr(cashBack), end);
@@ -306,7 +306,7 @@ public class Cashier extends javax.swing.JFrame {
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jScrollPane2 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        orderTable = new javax.swing.JTable();
         orderImage = new javax.swing.JLabel();
         cashierSearch = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
@@ -482,7 +482,7 @@ public class Cashier extends javax.swing.JFrame {
                     .addContainerGap(javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
         );
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        orderTable.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {null, null, null, null},
                 {null, null, null, null},
@@ -493,12 +493,12 @@ public class Cashier extends javax.swing.JFrame {
                 "Title 1", "Title 2", "Title 3", "Title 4"
             }
         ));
-        jTable1.addMouseListener(new java.awt.event.MouseAdapter() {
+        orderTable.addMouseListener(new java.awt.event.MouseAdapter() {
             public void mouseClicked(java.awt.event.MouseEvent evt) {
-                jTable1MouseClicked(evt);
+                orderTableMouseClicked(evt);
             }
         });
-        jScrollPane2.setViewportView(jTable1);
+        jScrollPane2.setViewportView(orderTable);
 
         orderImage.setBackground(new java.awt.Color(204, 255, 255));
         orderImage.setForeground(new java.awt.Color(204, 255, 255));
@@ -812,7 +812,6 @@ public class Cashier extends javax.swing.JFrame {
 
     private void formWindowClosed(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosed
         
-        
     }//GEN-LAST:event_formWindowClosed
 
     private void formWindowClosing(java.awt.event.WindowEvent evt) {//GEN-FIRST:event_formWindowClosing
@@ -837,7 +836,7 @@ public class Cashier extends javax.swing.JFrame {
     }//GEN-LAST:event_cashierSearchKeyTyped
 
     private void orderDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderDeleteActionPerformed
-        int row = jTable1.getSelectedRow();
+        int row = orderTable.getSelectedRow();
         if (row < 0) {
             JOptionPane.showMessageDialog(null, "Select menu first!", "Error Table", JOptionPane.ERROR_MESSAGE);
             return;
@@ -853,7 +852,7 @@ public class Cashier extends javax.swing.JFrame {
     }//GEN-LAST:event_orderAddActionPerformed
 
     private void orderUpdateActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_orderUpdateActionPerformed
-        int row = jTable1.getSelectedRow();
+        int row = orderTable.getSelectedRow();
         if (row < 0) {
             JOptionPane.showMessageDialog(null, "Select menu first!", "Error Table", JOptionPane.ERROR_MESSAGE);
             return;
@@ -906,7 +905,7 @@ public class Cashier extends javax.swing.JFrame {
             JOptionPane.showMessageDialog(null, "Add Menu Order first!", "Error Cashier", JOptionPane.ERROR_MESSAGE);
             return;
         }
-        if (!(!isCredit && Method.cashPay >= grandTotal) && !(isCredit && cashierBankName.getSelectedIndex() != 0 && cashierCardNumber.getText().length() == 16 && Method.isLong(cashierCardNumber.getText()))) {
+        if (!(!isCredit && Method.cashPay >= grandTotal) && !(isCredit && cashierBankName.getSelectedIndex() != 0 && cashierCardNumber.getText().length() == 16 && Method.isNumber(cashierCardNumber.getText()))) {
             JOptionPane.showMessageDialog(null, "Complete the Payment first!", "Error Payment", JOptionPane.ERROR_MESSAGE);
             return;
         }
@@ -978,13 +977,13 @@ public class Cashier extends javax.swing.JFrame {
         }
     }//GEN-LAST:event_cashierCardNumberKeyReleased
 
-    private void jTable1MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jTable1MouseClicked
-        int row = jTable1.getSelectedRow();
-        name = jTable1.getValueAt(row, 2).toString();
-        qty = Integer.valueOf(jTable1.getValueAt(row, 3).toString());
-        image = jTable1.getValueAt(row, 8).toString();
+    private void orderTableMouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_orderTableMouseClicked
+        int row = orderTable.getSelectedRow();
+        name = orderTable.getValueAt(row, 2).toString();
+        qty = Integer.valueOf(orderTable.getValueAt(row, 3).toString());
+        image = orderTable.getValueAt(row, 8).toString();
         loadDescription();
-    }//GEN-LAST:event_jTable1MouseClicked
+    }//GEN-LAST:event_orderTableMouseClicked
 
     private void cashierCouponActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_cashierCouponActionPerformed
         loadCashier();
@@ -1075,12 +1074,12 @@ public class Cashier extends javax.swing.JFrame {
     private javax.swing.JScrollPane jScrollPane3;
     private javax.swing.JScrollPane jScrollPane4;
     private javax.swing.JSpinner jSpinner1;
-    private javax.swing.JTable jTable1;
     private javax.swing.JButton orderAdd;
     private javax.swing.JButton orderDelete;
     private javax.swing.JLabel orderImage;
     private javax.swing.JTextField orderMenu;
     private javax.swing.JTextField orderQty;
+    private javax.swing.JTable orderTable;
     private javax.swing.JButton orderUpdate;
     // End of variables declaration//GEN-END:variables
 }
