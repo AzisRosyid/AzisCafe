@@ -243,7 +243,7 @@ public class Cashier extends javax.swing.JFrame {
                 message += String.format("%" + -(spc) + "s%s", "Waiting for Payment...", end);
             }
         } else {
-            if (Method.cashPay > grandTotal) {
+            if (Method.cashPay >= grandTotal) {
                 result += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, "Cash :", Method.curr(Method.cashPay), end);
                 result += start + "-".repeat(spc) + end;
                 result += String.format("%s%" + -(Method.spcKey) + "s%" + (Method.spcValue) + "s%s", start, "Change :", Method.curr(Method.cashPay - grandTotal + cashBack), end);
