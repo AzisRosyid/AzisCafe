@@ -4,13 +4,12 @@
  */
 package aziscafe;
 
-import java.awt.Component;
 import java.awt.Image;
 import java.awt.image.BufferedImage;
-import java.io.File;
-import java.io.IOException;
 import java.sql.*;
-import java.util.HashSet;
+import java.util.ArrayList;
+import java.util.Collections;
+import java.util.List;
 import java.util.Vector;
 import java.util.logging.Level;
 import java.util.logging.Logger;
@@ -77,7 +76,7 @@ public class Menu extends javax.swing.JFrame {
         loadDescription();
     }
     
-    private void loadData() {
+     private void loadData2() {
         dt.setRowCount(0);
         try {
             Statement s = db.getCon().createStatement();
@@ -102,6 +101,93 @@ public class Menu extends javax.swing.JFrame {
         }
     }
     
+    private void loadData() {
+        dt.setRowCount(0);
+        try {
+            Statement s = db.getCon().createStatement();
+            String ss = "id LIKE '%" + menuSearch.getText() + "%' || name LIKE '%" + menuSearch.getText() + "%'";
+            ResultSet rs = s.executeQuery("SELECT * FROM menus WHERE " + ss);
+
+            List<Vector<String>> data = new ArrayList<>();
+
+            int no = 1;
+            while (rs.next()) {
+                Vector<String> v = new Vector();
+                v.add(Integer.toString(no));
+                v.add(rs.getString(1));
+                v.add(rs.getString(2));
+                v.add(rs.getString(3));
+                v.add(rs.getString(4));
+                v.add(rs.getString(5));
+                v.add(rs.getString(6));
+                data.add(v);
+                no++;
+            }
+            
+            System.out.println("Before Sorting");
+            for (Vector<String> row : data) {
+                System.out.println(row);
+            }
+
+            if ("ASC".equals(menuOrderMethod.getSelectedItem())) {
+                insertionSort(data);
+            } else if ("DESC".equals(menuOrderMethod.getSelectedItem())) {
+                shellSort(data);
+            }
+
+            System.out.println("After Sorting | Order by index: "  + (menuOrder.getSelectedIndex() + 1) + " with method: " + menuOrderMethod.getSelectedItem());
+            for (Vector<String> row : data) {
+                System.out.println(row);
+                dt.addRow(row);
+            }
+        } catch (SQLException ex) {
+            Logger.getLogger(Menu.class.getName()).log(Level.SEVERE, null, ex);
+        }
+    }
+
+    private void insertionSort(List<Vector<String>> data) {
+        int n = data.size();
+        int sortByIndex = menuOrder.getSelectedIndex() + 1;
+
+        for (int i = 1; i < n; ++i) {
+            Vector<String> key = new Vector<>(data.get(i));
+            int j = i - 1;
+
+            while (j >= 0 && compareValues(data.get(j).get(sortByIndex), key.get(sortByIndex)) > 0) {
+                data.set(j + 1, new Vector<>(data.get(j)));
+                j = j - 1;
+            }
+            data.set(j + 1, key);
+        }
+    }
+
+    private void shellSort(List<Vector<String>> data) {
+        int n = data.size();
+        int sortByIndex = menuOrder.getSelectedIndex() + 1;
+
+        for (int gap = n / 2; gap > 0; gap /= 2) {
+            for (int i = gap; i < n; i++) {
+                Vector<String> temp = new Vector<>(data.get(i));
+                int j;
+                for (j = i; j >= gap && compareValues(data.get(j - gap).get(sortByIndex), temp.get(sortByIndex)) < 0; j -= gap) {
+                    data.set(j, new Vector<>(data.get(j - gap)));
+                }
+                data.set(j, temp);
+            }
+        }
+    }
+
+    private int compareValues(String value1, String value2) {
+        try {
+            Double num1 = Double.parseDouble(value1);
+            Double num2 = Double.parseDouble(value2);
+            return num1.compareTo(num2);
+        } catch (NumberFormatException e) {
+            // Handle non-numeric comparison
+            return value1.compareToIgnoreCase(value2);
+        }
+    }
+
     private void loadDescription() {
         menuName.setText(name);
         menuPrice.setText(price == null ? "" : Method.curr(price));
